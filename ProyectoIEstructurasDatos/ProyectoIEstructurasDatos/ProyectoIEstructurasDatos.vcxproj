@@ -128,7 +128,6 @@
     <ClInclude Include="Number.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DoubleList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Number.cpp" />
   </ItemGroup>

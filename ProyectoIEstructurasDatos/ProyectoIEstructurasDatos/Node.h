@@ -16,14 +16,18 @@ class Node
 private:
 	T* info;
 	Node<T>* next;
+	Node<T>* prior;
+	int index;
 
 public:
 	Node();
-	Node(T*, Node<T>*);
+	Node(T*, Node<T>*, Node<T>*);
 	T* getInfo();
 	Node<T>* getNext();
+	Node<T>* getPrior();
 	void setInfo(T*);
 	void setNext(Node<T>*);
+	void setPrior(Node<T>*);
 	string toString();
 	~Node();
 
@@ -39,7 +43,8 @@ Node<T>::Node() {
 }
 
 template<class T>
-Node<T>::Node(T* info, Node<T>* next): info(info), next(next) {
+Node<T>::Node(T* info, Node<T>* next, Node<T>* prior)
+	: info(info), next(next), prior(prior) {
 
 }
 
@@ -54,6 +59,11 @@ Node<T>* Node<T>::getNext() {
 }
 
 template<class T>
+Node<T>* Node<T>::getPrior() {
+	return prior;
+}
+
+template<class T>
 void Node<T>::setInfo(T* info) {
 	this->info = info;
 }
@@ -61,6 +71,11 @@ void Node<T>::setInfo(T* info) {
 template<class T>
 void Node<T>::setNext(Node<T>* next) {
 	this->next = next;
+}
+
+template<class T>
+void Node<T>::setPrior(Node<T>* prior) {
+	this->prior = prior;
 }
 
 template<class T>

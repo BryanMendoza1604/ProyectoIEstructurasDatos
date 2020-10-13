@@ -101,6 +101,5 @@ string Node<T>::toString() {
 
 template<class T>
 Node<T>::~Node() {
-	delete next;
-	info = nullptr;
+	
 }

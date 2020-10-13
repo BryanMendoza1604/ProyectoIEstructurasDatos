@@ -15,12 +15,16 @@ int main() {
 	Number num(17);
 	Number num1(28);
 	Number num2(15);
+	Number num3(12);
 
 	DoubleList<Number>* dList = new DoubleList<Number>();
 
 	dList->insert(&num);
-	dList->insert(&num2);
 	dList->insert(&num1);
+	dList->insert(&num2);
+	dList->insert(&num3);
+
+	dList->deleteInfo(&num2);
 
 	cout << dList->toString();
 

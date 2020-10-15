@@ -16,6 +16,9 @@ public:
 	~DoubleList();
 	void insert(T*);
 	void deleteInfo(T*);
+	void updateIndexList(); // update the index from the list, needed to the heap 
+	T* getObjByIndex(int); // return an object through a specific index;
+	void swapInfoByIndex(int, int);
 	bool isEmpty();
 	string toString();
 };
@@ -43,7 +46,6 @@ void DoubleList<T>::insert(T* info) {
 
 	if (isEmpty()) {
 		first = newNode;
-		first->setIndex(0);
 	}
 	else {
 		while (aux->getNext() != nullptr)
@@ -53,6 +55,7 @@ void DoubleList<T>::insert(T* info) {
 		aux->setNext(newNode);
 		newNode->setPrior(aux);
 	}
+	updateIndexList();
 
 
 }
@@ -89,8 +92,52 @@ void DoubleList<T>::deleteInfo(T* info) {
 		}
 	
 	}
-	else
-		throw "Lista Vacia";
+	/*else
+		throw "Lista Vacia";*/
+	updateIndexList();
+}
+
+template<class T>
+void DoubleList<T>::updateIndexList() {
+	Node<T>* aux = first;
+	int index = 0;
+	while (aux != nullptr)
+	{
+		aux->setIndex(index);
+		index++;
+		aux = aux->getNext();
+	}
+}
+
+template<class T>
+T* DoubleList<T>::getObjByIndex(int index) {
+	Node<T>* aux = first;
+	T* auxObj = nullptr;
+	while (aux != nullptr) {
+		if (aux->getIndex() == index)
+			auxObj = aux->getInfo();
+		aux = aux->getNext();
+	}
+	return auxObj;
+}
+
+template<class T>
+void DoubleList<T>::swapInfoByIndex(int x, int y) {
+	T* X = getObjByIndex(x);
+	T* Y = getObjByIndex(y);
+	Node<T>* aux = first;
+
+	while (aux != nullptr)
+	{
+		if (aux->getInfo() == getObjByIndex(x)) {
+			aux->setInfo(tmpY);
+		}
+		else if (aux.getInfo() == getObjByIndex(y)) {
+			aux->setInfo(tmpX);
+		}
+		aux = aux->getNext();
+	}
+
 }
 
 template<class T>

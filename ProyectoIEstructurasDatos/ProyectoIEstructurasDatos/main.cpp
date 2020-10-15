@@ -10,6 +10,7 @@ using std::cout;
 
 int main() {
 
+
 	//Prueba: Comprobacion de funciones correctas de la lista doblemente enlazada
 
 	Number num(17);
@@ -24,7 +25,7 @@ int main() {
 	dList->insert(&num2);
 	dList->insert(&num3);
 
-	dList->deleteInfo(&num2);
+	dList->swapInfoByIndex(0, 1);
 
 	cout << dList->toString();
 

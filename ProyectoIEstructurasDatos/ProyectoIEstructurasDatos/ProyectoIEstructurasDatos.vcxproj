@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DoubleList.h" />
+    <ClInclude Include="Heap.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Number.h" />
   </ItemGroup>

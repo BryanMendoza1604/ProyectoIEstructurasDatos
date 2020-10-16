@@ -21,3 +21,7 @@ ostream& operator<<(ostream& o,  Number &n) {
 
 	return o;
 }
+
+bool Number::operator<(Number &a) {
+	return (value < a.getValue()) ? true : false;
+}

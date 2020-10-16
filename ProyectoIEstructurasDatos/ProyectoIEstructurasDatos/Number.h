@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 
+
 using std::ostream;
 
 
@@ -16,8 +17,10 @@ public:
 	int getValue();
 	void setValue(int);
 	~Number();
-
+	bool operator<(Number &);
+	
 };
 
 ostream& operator<<(ostream& o, Number &n);
+
 

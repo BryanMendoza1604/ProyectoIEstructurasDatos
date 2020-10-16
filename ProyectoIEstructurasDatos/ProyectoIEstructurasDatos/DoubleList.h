@@ -13,12 +13,17 @@ private:
 	Node<T>* first;
 public:
 	DoubleList();
+	DoubleList(DoubleList&);
 	~DoubleList();
+	Node<T>* getFirst();
 	void insert(T*);
 	void deleteInfo(T*);
+	void deleteByIndex(int);
 	void updateIndexList(); // update the index from the list, needed to the heap 
 	T* getObjByIndex(int); // return an object through a specific index;
 	void swapInfoByIndex(int, int);
+	int getLastIndex(); // return the last object's index
+	bool compare(T&, T&);
 	bool isEmpty();
 	string toString();
 };
@@ -32,11 +37,34 @@ DoubleList<T>::DoubleList() {
 	first = nullptr;
 }
 
+template<class T>
+DoubleList<T>::DoubleList(DoubleList<T>& dList) {
+	Node<T>* aux = first;
+	while (dList.first != nullptr && aux == nullptr)
+	{
+		aux->setInfo(dList.getFirst()->getInfo());
+		aux->setPrior(dList.getFirst()->getPrior());
+		aux->setNext(dList.getFirst()->getNext());
+		dList.first = dList.first->getNext();
+		aux = aux->getNext();
+	}
+}
 
 
 template<class T>
 DoubleList<T>::~DoubleList() {
+	Node<T>* aux;
 
+	while (first != nullptr) {
+		aux = first;
+		first = first->getNext();
+		delete aux;
+	}
+}
+
+template<class T>
+Node<T>* DoubleList<T>::getFirst() {
+	return first;
 }
 
 template<class T>
@@ -98,6 +126,43 @@ void DoubleList<T>::deleteInfo(T* info) {
 }
 
 template<class T>
+void DoubleList<T>::deleteByIndex(int i) {
+	Node<T>* aux = first;
+	Node<T>* tempNext;
+	Node<T>* tempPrior;
+
+	if (!isEmpty()) {
+		if (i == first->getIndex() && first->getNext() == nullptr) {
+			first = nullptr;
+		}
+		else if (i == first->getIndex() && first->getNext() != nullptr) {
+			first = first->getNext();
+			first->setPrior(nullptr);
+			first->setNext(first->getNext());
+
+		}
+		else {
+			while (aux->getNext() != nullptr) {
+				if (aux->getIndex() == i) {
+					tempNext = aux->getNext();
+					tempPrior = aux->getPrior();
+					tempNext->setPrior(tempPrior);
+					tempPrior->setNext(tempNext);
+					delete aux;
+					break;
+				}
+				else
+					aux = aux->getNext();
+			}
+		}
+
+	}
+	/*else
+		throw "Lista Vacia";*/
+	updateIndexList();
+}
+
+template<class T>
 void DoubleList<T>::updateIndexList() {
 	Node<T>* aux = first;
 	int index = 0;
@@ -126,18 +191,35 @@ void DoubleList<T>::swapInfoByIndex(int x, int y) {
 	T* X = getObjByIndex(x);
 	T* Y = getObjByIndex(y);
 	Node<T>* aux = first;
-
+	
 	while (aux != nullptr)
 	{
-		if (aux->getInfo() == getObjByIndex(x)) {
-			aux->setInfo(tmpY);
-		}
-		else if (aux.getInfo() == getObjByIndex(y)) {
-			aux->setInfo(tmpX);
-		}
+		if (aux->getInfo() == X)
+			aux->setInfo(Y);
+		else if (aux->getInfo() == Y)
+			aux->setInfo(X);
 		aux = aux->getNext();
 	}
 
+}
+
+template<class T>
+int DoubleList<T>::getLastIndex() {
+	Node<T>* aux = first;
+	int last;
+
+	while (aux != nullptr)
+	{
+		if (aux->getNext() == nullptr)
+			last = aux->getIndex();
+		aux = aux->getNext();
+	}
+	return last;
+}
+
+template<class T>
+bool DoubleList<T>::compare(T& a, T& b) {
+	return (a < b) ? true : false;
 }
 
 template<class T>
